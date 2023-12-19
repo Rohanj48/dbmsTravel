@@ -23,7 +23,7 @@ def page_funcselect(win,oldframe,modestr,db):
 
 
     bb= Button(functype,text = "BOOK" ,command= lambda : fsearch.page_search(win,functype,modestr,db),  width = 20,height=10)
-    bt= Button(functype,text = "CANCEL" ,command = lambda:fcancel.page_cancel(win,db,functype) ,width = 20,height=10)
+    bt= Button(functype,text = "CANCEL" ,command = lambda:fcancel.page_cancel(win,db,functype,modestr) ,width = 20,height=10)
     print("hiiii")
 
 

@@ -15,14 +15,14 @@ def riderfunc(db,del_entry,res_label):
     res_label.configure(text=db.cancelstr)
     res_label.place(x=10,y=490)
 
-def page_cancel(win,db,oldframe):
+def page_cancel(win,db,oldframe,modestr):
 
     ## first show his bookings and let him choose booking id
     ## delete based on booking id 
     oldframe.forget()
     fr_cancel = Frame(win,width=900,height=600)
     fr_cancel.tkraise()
-    bookstr = db.get_bookings()
+    bookstr = db.get_bookings(modestr)
 
     l_heading = Label(fr_cancel,text="CANCEL YOUR BOOKINGS",font = h_font)
     l_b1 = Label(fr_cancel,text="Your Bookings -- ",font = b_font)
@@ -34,8 +34,8 @@ def page_cancel(win,db,oldframe):
     #l_bookings.place(x=50,y=150)
     fr_cancel.pack()
 
-    table = tw.Sheet(fr_cancel,width=900,height= 200)
-    table.headers(['user_id', 'B_id', 'numberseats', 'souce', 'dest'])
+    table = tw.Sheet(fr_cancel,width=800,height= 200)
+    table.headers(['BooKing ID','Source', 'Destintaion', 'Tickets Booked','Transport Number'])
     table.column_width(column=0, width=150, only_set_if_too_small=False)
     table.column_width(column=1, width=150, only_set_if_too_small=False)
     table.column_width(column=2, width=150, only_set_if_too_small=False)
@@ -48,7 +48,8 @@ def page_cancel(win,db,oldframe):
          'rc_insert_row'])
 
     for row in bookstr:
-         table.insert_row(values=row, idx='end', add_columns=False)   
+         t1 = (row[0],)+ row[3:8]
+         table.insert_row(values=t1, idx='end', add_columns=False)   
     table.place(x=0,y=150)
 
     del_label = Label(fr_cancel,text="Enter Bid to delete ",font = b_font) 
@@ -57,7 +58,7 @@ def page_cancel(win,db,oldframe):
     
 
     b_cancel  = Button(fr_cancel,text="Cancel",width=20,command = lambda : riderfunc(db,del_entry,res_label))
-    res_label.configure(Text=db.cancelstr)
+    res_label.configure(text=db.cancelstr)
     del_label.place(x=10,y=400)
     del_entry.place(x=10,y=430)
     b_cancel.place(x=10,y=460)

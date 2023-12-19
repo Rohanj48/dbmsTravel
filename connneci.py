@@ -14,6 +14,8 @@ class cnnc:
     rowc = 0
     cancelstr="--"    
     searchstr=""
+    curr_userid=NONE
+    curr_date=NONE
 
 
     def __init__(self):
@@ -23,6 +25,35 @@ class cnnc:
             password='tiger',
             database='Agency'
         )
+
+    def insert_booking(self,ne,modestr,strt,dest,nos,uid,bno):
+
+        cur = self.db.cursor()
+        cur.execute("select * from booking")
+        bidd = 0
+        for row in cur.fetchall():
+            bidd=row[0]
+        
+        cur.close()
+        bidd = bidd+1
+        str = "insert into booking values({t1},{t2},'{t3}','{t4}','{t5}',{t6},{t7});".format(
+            t1=bidd,
+            t2=self.curr_userid,t3=modestr,t4=strt,t5=dest,t6=nos,t7=bno
+        )
+        print(str)
+        cur = self.db.cursor()
+        cur.execute(str)
+
+        ## updating modestr table with seat values
+
+        str = "update {t1} set nosa=nosa-{t2} where no={t3} and day ='{t4}'".format(
+            t1=modestr,t2=nos,t3=bno,t4=self.curr_date
+        )
+        print(str)
+        cur.execute(str)
+        self.db.commit()
+        cur.close()
+
 
     def validate_user(self,entpass,entuser,l,next_page) -> int:
 
@@ -40,6 +71,7 @@ class cnnc:
         if row!=None:
             if (row[1]==pstr):
                 l.configure(text = "   Validated")
+                self.curr_userid=row[0]
                 return 1
             else:
                 l.configure(text = "Not Validated")
@@ -56,11 +88,11 @@ class cnnc:
         cur.execute(str)
         cur.close()
     
-    def get_bookings(self) -> tuple:
+    def get_bookings(self,modestr) -> tuple:
 
         outstr = "User\tB_id\tfrom\tto\n"
         cur = self.db.cursor()
-        cur.execute("select * from booking ;")
+        cur.execute("select * from booking where user_id = {t1} and type = '{t2}';".format(t1=self.curr_userid,t2=modestr))
         li = []
 
         rows = cur.fetchall()
@@ -74,7 +106,24 @@ class cnnc:
     def rem_bookings(self,bid:str):
         bid = bid.lstrip()
         bid = bid.rstrip()
-        qry = "delete from booking where booking_id="+bid+";"
+
+        """
+        qry = "select nos from booking where bid="+bid+";"
+        cur = self.db.cursor()
+        nos = 0
+        cur.execute(qry)
+        
+        for row in cur.fetchall():
+            if row != None:
+                nos=row[0]
+
+
+        cur.close()
+        """
+        ## updating 
+        ## DEleting
+        qry = "delete from booking where bid="+bid+";"
+
         print(qry)
         cur = self.db.cursor()
         
@@ -82,6 +131,8 @@ class cnnc:
         self.db.commit()
         self.rowc = cur.rowcount
         cur.close()
+
+        
 
         if self.rowc==0:
             self.cancelstr = "Bid INVALID"
@@ -95,6 +146,7 @@ class cnnc:
         cur = self.db.cursor()
         cur.execute(str)
         outstr=""
+        self.curr_date = datestr
         rows = cur.fetchall()
         for row in rows:
             if row!=NONE:

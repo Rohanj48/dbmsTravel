@@ -10,6 +10,7 @@ b1_font = ("Times", "17",)
 
 
 def search_submit(db,from_entry,to_entry,date_entry,modestr,l_out,bno_lable,bno_entry,bno_button):
+
     db.search(from_entry.get(),to_entry.get(),date_entry.get(),modestr,l_out)
     
     bno_lable.place(x=30,y=500)
@@ -42,9 +43,7 @@ def page_search(win,oldframe,modestr,db):
     
     bno_entry = Entry(win)
     bno_lable = Label(win,text="Choose Bno for Booking ",font = b1_font,anchor='w')
-    bno_button = Button(win, text="Book",width=30,command=lambda:page_book(win,functype,modestr,db))
-
-
+    bno_button = Button(win, text="Book",width=30,command=lambda:page_book(win,functype,modestr,from_entry.get(),to_entry.get(),"300",db,bno_entry.get()))
 
     # Button to submit the form
     submit_button = Button(win, text="Submit",command=lambda:search_submit(db,from_entry,to_entry,date_entry,modestr,l_out,bno_lable,bno_entry,bno_button))
@@ -55,9 +54,16 @@ def page_search(win,oldframe,modestr,db):
     pass
 
 
+def button_book_handle(entry_nos,modestr,strt,dest,nos,uid,db,bno):
+
+    db.insert_booking(entry_nos,modestr,strt,dest,nos,uid,bno)
 
 
-def page_book(win,oldframe,modestr,db):
+
+
+
+
+def page_book(win,oldframe,modestr,strt,dest,uid,db,bno_number):
 
     functype = Frame(win,width=900,height=600)
     oldframe.forget()
@@ -86,8 +92,9 @@ def page_book(win,oldframe,modestr,db):
     tickets_entry.place(x=150, y=220)
 
     # Button to book tickets
-    book_button = Button(win, text="Book Tickets",)
+    book_button = Button(win, text="Book Tickets",command=lambda : button_book_handle(tickets_entry,modestr,strt,dest,tickets_entry.get(),uid,db,bno_number))
     book_button.place(x=150, y=260)
+
 
    
 

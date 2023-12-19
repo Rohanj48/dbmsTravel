@@ -28,7 +28,10 @@ win.geometry("900x600")
 
 def page_typefind():
 
-    fr_type = Frame(win,width=900,height=600)
+    newwin = Toplevel()
+    newwin.geometry('900x600')
+
+    fr_type = Frame(newwin,width=900,height=600)
     fr_type.tkraise()
     fr_type.pack()
 
@@ -39,9 +42,9 @@ def page_typefind():
     imgtrain= PhotoImage(file='train.png')
     imgflight= PhotoImage(file='flight.png')
 
-    bb= Button(fr_type,text = "bus" ,command = lambda : fselec.page_funcselect(win,fr_type,"bus",db) ,width = 10,height=10)
-    bt= Button(fr_type,text = "train" ,command = lambda : fselec.page_funcselect(win,fr_type,"train",db) ,width = 10,height=10)
-    bf= Button(fr_type,text = "flight" ,command = lambda : fselec.page_funcselect(win,fr_type,"flight",db),width = 10,height=10)
+    bb= Button(fr_type,text = "bus" ,command = lambda : fselec.page_funcselect(newwin,fr_type,"bus",db) ,width = 10,height=10)
+    bt= Button(fr_type,text = "train" ,command = lambda : fselec.page_funcselect(newwin,fr_type,"train",db) ,width = 10,height=10)
+    bf= Button(fr_type,text = "flight" ,command = lambda : fselec.page_funcselect(newwin,fr_type,"flight",db),width = 10,height=10)
 
 
     bb.place(x=200,y=200)
@@ -49,7 +52,7 @@ def page_typefind():
     bf.place(x=400,y=200)
 
 
-
+    newwin.mainloop()
 
 
     pass
