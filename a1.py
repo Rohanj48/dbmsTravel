@@ -10,8 +10,14 @@ import fselec
 
 db = cnnc()
 
-h_font=('Helvetica bold',40)
-b_font = ("Times", "14",)
+h_font1=('Helvetica bold',40)
+h_font=('Fixedsys',40)
+h_font2=('Fixedsys',24)
+h_font3=('Fixedsys',18)
+b_font1 = ("Times", "14",)
+b_font = ("Lucida Console", "14",)
+b_font3 = ("Lucida Console", "25",)
+b_font2 = ("Lucida Console", "18",)
 
 win = Tk()
 
@@ -35,6 +41,13 @@ def page_typefind():
     fr_type.tkraise()
     fr_type.pack()
 
+    canvas1 = Canvas( fr_type, width = 900, height = 20) 
+  
+    canvas1.place(x=0,y=80) 
+    canvas1.create_line(0,0,900,0,width=9,fill='white')
+  
+
+
     l_heading = Label(fr_type,text="Mode of Transport",font = h_font)
     l_heading.place(x=0,y=0)
 
@@ -42,14 +55,14 @@ def page_typefind():
     imgtrain= PhotoImage(file='train.png')
     imgflight= PhotoImage(file='flight.png')
 
-    bb= Button(fr_type,text = "bus" ,command = lambda : fselec.page_funcselect(newwin,fr_type,"bus",db) ,width = 10,height=10)
-    bt= Button(fr_type,text = "train" ,command = lambda : fselec.page_funcselect(newwin,fr_type,"train",db) ,width = 10,height=10)
-    bf= Button(fr_type,text = "flight" ,command = lambda : fselec.page_funcselect(newwin,fr_type,"flight",db),width = 10,height=10)
+    bb= Button(fr_type,text = "Bus" ,borderwidth=5,font=b_font2,command = lambda : fselec.page_funcselect(newwin,fr_type,"bus",db) ,width = 15,height=7)
+    bt= Button(fr_type,text = "Train" ,borderwidth=5,font=b_font2,command = lambda : fselec.page_funcselect(newwin,fr_type,"train",db) ,width = 15,height=7)
+    bf= Button(fr_type,text = "Flight" ,borderwidth=5,font=b_font2,command = lambda : fselec.page_funcselect(newwin,fr_type,"flight",db),width = 15,height=7)
 
 
-    bb.place(x=200,y=200)
-    bt.place(x=300,y=200)
-    bf.place(x=400,y=200)
+    bb.place(x=100,y=200)
+    bt.place(x=350,y=200)
+    bf.place(x=600,y=200)
 
 
     newwin.mainloop()
@@ -129,9 +142,10 @@ def btfunc_login():
 bg_image = PhotoImage(file = "bg.png")
 
 
-canvas1 = Canvas( win, width = 900, height = 600) 
+canvas1 = Canvas( win, width = 900, height = 20) 
   
-#canvas1.pack(fill = "both", expand = True) 
+canvas1.place(x=0,y=80) 
+canvas1.create_line(0,0,900,0,width=9,fill='white')
   
 # Display image 
 
@@ -141,16 +155,16 @@ l_heading = Label(win,text="Travel Management System",font = h_font)
 
 l_username = Label(win,text="Username",font = b_font)
 l_password = Label(win,text="Password",font = b_font)
-l_ex = Label(win,text="'To Explore is to Live' ",font = ("Times", "24", "bold italic") )
+l_ex = Label(win,text="'To Explore is to Live' ",font = h_font2 )
 
 l_status = Label(win,text="",font = b_font)
 
-e_username = Entry(win,width=20 )
-e_passsword = Entry(win,width=20 )
+e_username = Entry(win,width=20 ,borderwidth=5)
+e_passsword = Entry(win,width=20,borderwidth=5,show='*' )
 e_passsword.insert(0,"abc")
 e_username.insert(0,"amit")
 
-b_submit = Button(win,text="Submit",width=20,command=btfunc_login)
+b_submit = Button(win,text="Submit",borderwidth=5,width=20,command=btfunc_login)
 
 l_heading.place(x=90,y=3)
 
@@ -160,10 +174,10 @@ e_username.place(x=400,y=100)
 l_password.place(x=300,y=150)
 e_passsword.place(x=400,y=150)
 
-l_status.place(x=400,y=230)
+l_status.place(x=400,y=240)
 b_submit.place(x=400,y=200)
 
-l_ex.place(x=300,y=300)
+l_ex.place(x=200,y=300)
 
 win.mainloop()
 

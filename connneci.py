@@ -74,7 +74,7 @@ class cnnc:
                 self.curr_userid=row[0]
                 return 1
             else:
-                l.configure(text = "Not Validated")
+                l.configure(text = "Wrong PassWord")
                 return 0
 
         cur.close()
@@ -150,7 +150,7 @@ class cnnc:
         rows = cur.fetchall()
         for row in rows:
             if row!=NONE:
-                outstr += "No:{0}:\t Name {1} \ton {2} \t Seats Left: {3}".format(row[0],row[1],row[5],row[4])
+                outstr += "No:{0}:\t{1} \ton {2} \tSeats Left: {3}".format(row[0],row[1],row[5],row[4])
                 outstr+="\n"
                 print(row)
         cur.close()
